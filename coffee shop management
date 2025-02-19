@@ -1,0 +1,66 @@
+class CoffeeShop:
+    def __init__(self):
+        self.menu = {
+            "Espresso": 2.50,
+            "Latte": 3.50,
+            "Cappuccino": 3.00,
+            "Americano": 2.00,
+            "Mocha": 3.75,
+            "Black Coffee": 1.50,
+        }
+        self.order = []
+    
+    def display_menu(self):
+        print("Welcome to our Coffee Shop!")
+        print("Here is our menu:\n")
+        for item, price in self.menu.items():
+            print(f"{item}: ${price:.2f}")
+    
+    def take_order(self):
+        while True:
+            self.display_menu()
+            order_item = input("\nPlease enter the coffee you would like to order (or type 'done' to finish): ")
+            
+            if order_item.lower() == "done":
+                break
+            elif order_item in self.menu:
+                self.order.append(order_item)
+                print(f"Added {order_item} to your order.")
+            else:
+                print("Sorry, we don't have that item. Please choose from the menu.")
+    
+    def calculate_total(self):
+        total = 0
+        for item in self.order:
+            total += self.menu[item]
+        return total
+    
+    def print_receipt(self):
+        print("\n--- Your Receipt ---")
+        for item in self.order:
+            print(f"{item}: ${self.menu[item]:.2f}")
+        total = self.calculate_total()
+        print(f"Total: ${total:.2f}")
+    
+    def serve_order(self):
+        print("\nThank you for your order!")
+        self.print_receipt()
+        self.order.clear()
+        print("Enjoy your coffee!")
+
+def main():
+    shop = CoffeeShop()
+    
+    while True:
+        shop.take_order()
+        
+        if shop.order:
+            shop.serve_order()
+        
+        repeat = input("\nWould you like to place another order? (yes/no): ").lower()
+        if repeat != "yes":
+            print("Thank you for visiting! Have a great day!")
+            break
+
+if __name__ == "__main__":
+    main()
